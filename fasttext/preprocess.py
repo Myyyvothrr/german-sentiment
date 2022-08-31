@@ -50,9 +50,11 @@ def saveAndSplit(name, className, data):
 
 
 def cleanAndSplit(name, dataLoader):
+    print(name)
 
-    isSetAlreadyLoaded = os.path.exists(fileNameFor(name, "", "neutral")) or os.path.exists(
-        fileNameFor(name, "", "negative")) or os.path.exists(fileNameFor(name, "", "positive"))
+    #isSetAlreadyLoaded = os.path.exists(fileNameFor(name, "", "neutral")) or os.path.exists(
+    #    fileNameFor(name, "", "negative")) or os.path.exists(fileNameFor(name, "", "positive"))
+    isSetAlreadyLoaded = False
 
     if isSetAlreadyLoaded == False:
         print("cleaning set: "+name)
@@ -107,21 +109,23 @@ def split(count, className):
 
 
 def run():
-    if(tools.config()["preprocessing"]["use-cache"] is False):
-        subprocess.call(
-            f"rm -rf {pathForSets}* {pathForTestsets}* ", shell=True)
+    #if(tools.config()["preprocessing"]["use-cache"] is False):
+    #    subprocess.call(
+    #        f"rm -rf {pathForSets}* {pathForTestsets}* ", shell=True)
 
+    # TODO check if this config is the one used to train huggingface model
     dataLoaders = [
-        ["emotions", lambda:tools.loadData(source_data+"emotions")],
+        #["emotions", lambda:tools.loadData(source_data+"emotions")],
         ["germeval", lambda:tools.loadGermeval2017(source_data+"germeval2017/set_v1.4.tsv")],
         ["sb10k", lambda:tools.loadData(source_data+"SB10k/not-preprocessed/corpus_label_text.tsv","\t")],
         ["PotTS", lambda:tools.loadData(source_data+"PotTS/not-preprocessed/corpus_label_text.tsv","\t")],
-        ["filmstarts", lambda:tools.loadFilmstarts(source_data+"filmstarts/filmstarts.tsv")],
-        ["scare", lambda:tools.loadScareSet(source_data+"scare_v1.0.0_data/reviews/")],
-        ["holidaycheck", lambda:tools.loadHolidaycheck(source_data+"holidaycheck/holidaycheck.clean.filtered.tsv")],
-        ["leipzig-mixed-typical-2011", lambda:tools.loadData(source_data+"leipzig/deu-mixed-labeled")],
-        ["leipzig-newscrawl-2017", lambda:tools.loadData(source_data+"leipzig/deu-newscrawl-2017-labeled")],
-        ["leipzig-deu-wikipedia-2016", lambda:tools.loadData(source_data+"leipzig/deu-wikipedia-2016-labeled")]
+        ["filmstarts", lambda:tools.loadFilmstarts("/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/oliverguhr/sentiment-data-reviews-and-neutral/filmstarts/filmstarts.tsv")],
+        # TODO - waiting for mail reply
+        #["scare", lambda:tools.loadScareSet(source_data+"scare_v1.0.0_data/reviews/")],
+        ["holidaycheck", lambda:tools.loadHolidaycheck("/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/oliverguhr/sentiment-data-reviews-and-neutral/holidaycheck/holidaycheck.clean.filtered.tsv")],
+        ["leipzig-mixed-typical-2011", lambda:tools.loadData("/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/oliverguhr/sentiment-data-reviews-and-neutral/leipzig/deu-mixed-labeled")],
+        ["leipzig-newscrawl-2017", lambda:tools.loadData("/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/oliverguhr/sentiment-data-reviews-and-neutral/leipzig/deu-newscrawl-2017-labeled")],
+        ["leipzig-deu-wikipedia-2016", lambda:tools.loadData("/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/oliverguhr/sentiment-data-reviews-and-neutral/leipzig/deu-wikipedia-2016-labeled")]
     ]
     dataSets = []
     table = []
@@ -179,9 +183,12 @@ def run():
     trainFile = path+"model.train"
     validFile = path+"model.valid"
     testFile = path+"model.test"
-    
-    executeToFile(f"cat {pathForSets}all.train.* | cut -f2,3", trainFile, shellMode=True)
-    executeToFile(f"cat {pathForSets}all.valid.* | cut -f2,3", validFile, shellMode=True)
+
+    # full output
+    #executeToFile(f"cat {pathForSets}all.train.* | cut -f2,3", trainFile, shellMode=True)
+    #executeToFile(f"cat {pathForSets}all.valid.* | cut -f2,3", validFile, shellMode=True)
+    executeToFile(f"cat {pathForSets}all.train.*", trainFile, shellMode=True)
+    executeToFile(f"cat {pathForSets}all.valid.*", validFile, shellMode=True)
     executeToFile(f"cat {pathForSets}all.test.*", testFile, shellMode=True)
     
     totalTrain = tools.lineCount(trainFile)
@@ -212,6 +219,8 @@ def run():
 
     # create wordvector training file
     #executeToFile(f"cat {pathForSets}*.*",path+"fasttext.wordvecc",shellMode = True)
+
+    print("done.")
 
 
 if __name__ == '__main__':

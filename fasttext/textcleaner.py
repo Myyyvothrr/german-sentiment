@@ -63,7 +63,10 @@ def replaceSmiley(text):
                         text = text.replace(simley[0]," smiley" + simley[1] + " ")
         return text
 
-def cleanText(text):              
+def cleanText(text):
+        # dont clean for raw text export...
+        return text
+
         if(config["replace-smiley"] is True):
                 text = replaceSmiley(text)
         

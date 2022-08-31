@@ -5,11 +5,13 @@
         { "name": "PotTS", "train": true, "test": true },
         { "name": "usage", "train": false, "test": false },
         { "name": "filmstarts", "train": true, "test": true },
-        { "name": "scare", "train": false, "test": true },
         { "name": "holidaycheck", "train": true, "test": true },
         { "name": "leipzig-mixed-typical-2011", "train": false, "test": false },
         { "name": "leipzig-newscrawl-2017", "train": false, "test": false },
         { "name": "leipzig-deu-wikipedia-2016", "train": true, "test": true }
+    ],
+    "TODO": [
+        { "name": "scare", "train": false, "test": true }
     ],
     "preprocessing": {
         "use-cache": false,
