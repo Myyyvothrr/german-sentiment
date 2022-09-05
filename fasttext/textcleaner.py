@@ -8,13 +8,17 @@ from tqdm import tqdm
 
 
 cleanChars = re.compile(r'[^A-Za-züöäÖÜÄß.!? ]', re.MULTILINE)
-cleanHttpUrls = re.compile(r'https*\S+', re.MULTILINE)
+
+#cleanHttpUrls = re.compile(r'https*\S+', re.MULTILINE)
+# also clean "http", which are preprocessed urls from xlm
+cleanHttpUrls = re.compile(r'(https*\S+)|(http)', re.MULTILINE)
+
 cleanAtMentionsTwitter = re.compile(r'@\S+', re.MULTILINE)
-        
+
 config = tools.config()["preprocessing"]
 
 def cleanData(data:List[str]) -> List[str]:
-    with Pool(6) as p:        
+    with Pool(6) as p:
         data = p.map(cleanRow, data)        
 
     #for row in tqdm(data):
@@ -65,7 +69,7 @@ def replaceSmiley(text):
 
 def cleanText(text):
         # dont clean for raw text export...
-        return text
+        #return text
 
         if(config["replace-smiley"] is True):
                 text = replaceSmiley(text)
