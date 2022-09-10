@@ -31,26 +31,27 @@ def _create_examples(lines, set_type):
 
         # use raw unprocessed text
         #text_a = line[1].replace("ä","ae").replace("ö","oe").replace("ü","ue").replace("ß","ss")
-        text_a = line[2]
+        text_a = line[2].strip()
 
-        # dataset
-        dataset_name = line[0].strip()
+        if text_a:
+            # dataset
+            dataset_name = line[0].strip()
 
-        # create labels
-        label = line[1].replace("__label__","")
+            # create labels
+            label = line[1].replace("__label__","")
 
-        original_label = label_map[label]
-        ttlab_label = ttlab_mapping[original_label]
+            original_label = label_map[label]
+            ttlab_label = ttlab_mapping[original_label]
 
-        examples.append({
-            "text": text_a,
-            "original_label": original_label,
-            "ttlab_label": ttlab_label,
-            "split": set_type,
-            "id": guid,
-            "sentiment": label,
-            "dataset": f"oliverguhr/{dataset_name}"
-        })
+            examples.append({
+                "text": text_a,
+                "original_label": original_label,
+                "ttlab_label": ttlab_label,
+                "split": set_type,
+                "id": guid,
+                "sentiment": label,
+                "dataset": f"oliverguhr/{dataset_name}"
+            })
 
     examples = pd.DataFrame(examples)
 

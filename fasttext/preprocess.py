@@ -113,15 +113,13 @@ def run():
     #    subprocess.call(
     #        f"rm -rf {pathForSets}* {pathForTestsets}* ", shell=True)
 
-    # TODO check if this config is the one used to train huggingface model
     dataLoaders = [
         #["emotions", lambda:tools.loadData(source_data+"emotions")],
         ["germeval", lambda:tools.loadGermeval2017(source_data+"germeval2017/set_v1.4.tsv")],
         ["sb10k", lambda:tools.loadData(source_data+"SB10k/not-preprocessed/corpus_label_text.tsv","\t")],
         ["PotTS", lambda:tools.loadData(source_data+"PotTS/not-preprocessed/corpus_label_text.tsv","\t")],
         ["filmstarts", lambda:tools.loadFilmstarts("/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/oliverguhr/sentiment-data-reviews-and-neutral/filmstarts/filmstarts.tsv")],
-        # TODO - waiting for mail reply
-        #["scare", lambda:tools.loadScareSet(source_data+"scare_v1.0.0_data/reviews/")],
+        ["scare", lambda:tools.loadScareSet("/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/klinger/scare_v1.0.0_data/scare_v1.0.0_data/reviews/")],
         ["holidaycheck", lambda:tools.loadHolidaycheck("/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/oliverguhr/sentiment-data-reviews-and-neutral/holidaycheck/holidaycheck.clean.filtered.tsv")],
         ["leipzig-mixed-typical-2011", lambda:tools.loadData("/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/oliverguhr/sentiment-data-reviews-and-neutral/leipzig/deu-mixed-labeled")],
         ["leipzig-newscrawl-2017", lambda:tools.loadData("/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/oliverguhr/sentiment-data-reviews-and-neutral/leipzig/deu-newscrawl-2017-labeled")],
