@@ -114,7 +114,7 @@ def run():
     #        f"rm -rf {pathForSets}* {pathForTestsets}* ", shell=True)
 
     dataLoaders = [
-        #["emotions", lambda:tools.loadData(source_data+"emotions")],
+        ["emotions", lambda:tools.loadData(source_data+"emotions.txt")],
         ["germeval", lambda:tools.loadGermeval2017(source_data+"germeval2017/set_v1.4.tsv")],
         ["sb10k", lambda:tools.loadData(source_data+"SB10k/not-preprocessed/corpus_label_text.tsv","\t")],
         ["PotTS", lambda:tools.loadData(source_data+"PotTS/not-preprocessed/corpus_label_text.tsv","\t")],

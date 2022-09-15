@@ -69,7 +69,7 @@ def replaceSmiley(text):
 
 def cleanText(text):
         # dont clean for raw text export...
-        return text
+        #return text
 
         if(config["replace-smiley"] is True):
                 text = replaceSmiley(text)

@@ -1,5 +1,6 @@
 {
     "datasets": [
+        { "name": "emotions", "train": true, "test": true },
         { "name": "germeval", "train": true, "test": true },
         { "name": "sb10k", "train": true, "test": true },
         { "name": "PotTS", "train": true, "test": true },

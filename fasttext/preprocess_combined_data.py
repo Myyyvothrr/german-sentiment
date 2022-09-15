@@ -44,6 +44,13 @@ def preprocess_combined(sample):
     return sample
 
 
+print(dataset_combined["train"][0])
+print(dataset_combined["train"][10])
+print(dataset_combined["train"][565])
+print(dataset_combined["train"][110])
+print(dataset_combined["train"][1110])
+print(dataset_combined["train"][56115])
+
 dataset_combined = dataset_combined.map(preprocess_combined)
 
 dataset_combined = dataset_combined.remove_columns(['original_label', 'ttlab_label', 'sentiment', 'split', '__index_level_0__'])
@@ -51,6 +58,9 @@ dataset_combined = dataset_combined.remove_columns(['original_label', 'ttlab_lab
 print(dataset_combined["train"][0])
 print(dataset_combined["train"][10])
 print(dataset_combined["train"][565])
+print(dataset_combined["train"][110])
+print(dataset_combined["train"][1110])
+print(dataset_combined["train"][56115])
 
 combined_dataset_name = "oliverguhr"
 combined_dataset_path = f"/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/experiments/de/3sentiment/{combined_dataset_name}"
