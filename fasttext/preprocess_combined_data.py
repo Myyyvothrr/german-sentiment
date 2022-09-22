@@ -7,9 +7,19 @@ import textcleaner
 db_dir = "/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/experiments/de/3sentiment"
 db_file = f"{db_dir}/datasets.db"
 
+# remove data samples that are duplicates and not in the same split
+remove_duplicates = True
+
 # Get combined dataset
 con = sqlite3.connect(db_file)
-df_combined = pd.read_sql("SELECT * FROM dataset", con=con)
+
+if not remove_duplicates:
+    df_combined = pd.read_sql("SELECT * FROM dataset", con=con)
+else:
+    # remove own data "oliverguhr/*"
+    # also remove all duplicates from "umsab/german" that are not in the same split
+    df_combined = pd.read_sql('SELECT * FROM dataset WHERE NOT dataset LIKE "oliverguhr/%" AND (NOT dataset == "umsab/german" OR (dataset == "umsab/german" AND id NOT IN (SELECT `umsab/german` as id FROM duplicates WHERE same_split=0)))', con=con)
+
 con.close()
 
 # Preprocess and export combined dataset
@@ -63,6 +73,8 @@ print(dataset_combined["train"][1110])
 print(dataset_combined["train"][56115])
 
 combined_dataset_name = "oliverguhr"
+if remove_duplicates:
+    combined_dataset_name += "-unseen"
 combined_dataset_path = f"/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/experiments/de/3sentiment/{combined_dataset_name}"
 
 # save preprocessed dataset
