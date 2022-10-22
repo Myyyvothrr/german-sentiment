@@ -78,7 +78,7 @@ if __name__ == "__main__":
     df = pd.concat([df_train, df_dev, df_test])
     df.set_index("id", inplace=True)
 
-    db_dir = "/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/experiments/de/3sentiment"
+    db_dir = "/home/daniel/data/uni/masterarbeit-sentiment/data/datasets/experiments/de/3sentiment-exact"
     db_file = f"{db_dir}/datasets.db"
 
     con = sqlite3.connect(db_file)

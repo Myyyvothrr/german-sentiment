@@ -68,8 +68,10 @@ def replaceSmiley(text):
         return text
 
 def cleanText(text):
-        # dont clean for raw text export...
-        #return text
+        # export raw text?
+        export_raw = True
+        # save original text
+        original_text = text.replace("\n", " ").strip()
 
         if(config["replace-smiley"] is True):
                 text = replaceSmiley(text)
@@ -93,7 +95,15 @@ def cleanText(text):
         # remove samples with a length over 1024
         # since they will be truncated by fasttext 
         # see MAX_LINE_SIZE in https://github.com/facebookresearch/fastText/blob/master/src/dictionary.h        
-        return text[:config["max-line-length"]].lower()         
+        text = text[:config["max-line-length"]].lower()
+
+        # if raw text should be saved, check if cleaned text would become empty
+        # if not, return original, else return cleaned to let original program proceed
+        if export_raw:
+            if text:
+                return original_text
+
+        return text
 
 if __name__ == "__main__":    
 #    sentence = stripStopWords("das ist ein toller satz")
